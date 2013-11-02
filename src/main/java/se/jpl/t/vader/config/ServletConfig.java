@@ -1,4 +1,4 @@
-package se.jpl.t.sensors.config;
+package se.jpl.t.vader.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

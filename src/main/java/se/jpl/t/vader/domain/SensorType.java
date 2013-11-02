@@ -1,4 +1,4 @@
-package se.jpl.t.sensors.domain;
+package se.jpl.t.vader.domain;
 
 public enum SensorType {
     TEMPERATURE,

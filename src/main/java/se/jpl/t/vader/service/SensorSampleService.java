@@ -1,4 +1,4 @@
-package se.jpl.t.sensors.service;
+package se.jpl.t.vader.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import se.jpl.t.sensors.domain.SensorSample;
-import se.jpl.t.sensors.domain.SensorType;
+import se.jpl.t.vader.domain.SensorSample;
+import se.jpl.t.vader.domain.SensorType;
 
 @Service
 public class SensorSampleService {

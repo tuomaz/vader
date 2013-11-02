@@ -1,4 +1,4 @@
-package se.jpl.t.sensors.web;
+package se.jpl.t.vader.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

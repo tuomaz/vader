@@ -1,4 +1,4 @@
-package se.jpl.t.sensors.web;
+package se.jpl.t.vader.web;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import se.jpl.t.sensors.domain.SensorSample;
-import se.jpl.t.sensors.service.SensorSampleService;
+import se.jpl.t.vader.domain.SensorSample;
+import se.jpl.t.vader.service.SensorSampleService;
 
 @RequestMapping("/rest")
 @Controller
