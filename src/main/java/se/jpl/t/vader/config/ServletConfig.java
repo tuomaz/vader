@@ -15,7 +15,7 @@ public class ServletConfig implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("se.jpl.t.sensors.config");
+        context.setConfigLocation("se.jpl.t.vader.config");
         servletContext.addListener(new ContextLoaderListener(context));
 
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
