@@ -27,11 +27,11 @@ import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @EnableWebMvc
-@ComponentScan(basePackages = { "se.jpl.t.sensors" })
+@ComponentScan(basePackages = { "se.jpl.t.vader" })
 @Configuration
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     private final static String PROD_ENV = "yankton";
-    private final static String PROD_PROPERTIES_PATH = "/etc/sensors/sensors.properties";
+    private final static String PROD_PROPERTIES_PATH = "/etc/vader/vader.properties";
 
     @Autowired
     private Environment env;
@@ -53,7 +53,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         if ((env.getActiveProfiles().length == 1 && PROD_ENV.equalsIgnoreCase(env.getActiveProfiles()[0]))) {
             resource = new FileSystemResource(PROD_PROPERTIES_PATH);
         } else {
-            resource = new ClassPathResource("sensors-" + env.getProperty("spring.profiles.active") + ".properties");
+            resource = new ClassPathResource("vader-" + env.getProperty("spring.profiles.active") + ".properties");
         }
         ppc.setLocations(new Resource[] {resource});
         ppc.setIgnoreResourceNotFound(true);
