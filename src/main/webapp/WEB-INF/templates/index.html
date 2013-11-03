@@ -2,5 +2,10 @@
 <html lang="sv">
     <body>
         Hej
+        <div id="links">
+            <ul>
+                <li th:each="sample : ${samples}">${sample.value}</li>
+            </ul>
+        </div>
     </body>
 </html>

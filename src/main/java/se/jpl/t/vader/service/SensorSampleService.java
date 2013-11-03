@@ -1,15 +1,14 @@
 package se.jpl.t.vader.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import se.jpl.t.vader.domain.SensorSample;
-import se.jpl.t.vader.domain.SensorType;
+import se.jpl.t.vader.domain.SensorSampleRowMapper;
 
 @Service
 public class SensorSampleService {
@@ -22,18 +21,14 @@ public class SensorSampleService {
     
     public SensorSample getOne() {
         SensorSample sample = jdbcTemplate.queryForObject(
-                " select ts, updated, value, type, name from sample limit 1",
-                new RowMapper<SensorSample>() {
-                    public SensorSample mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        SensorSample sample = new SensorSample();
-                        sample.setTimestamp(rs.getDate("ts"));
-                        sample.setUpdated(rs.getDate("updated"));
-                        sample.setValue(rs.getFloat("value"));
-                        sample.setType(SensorType.valueOf(rs.getString("type")));
-                        sample.setName(rs.getString("name"));
-                        return sample;
-                    }
-                });
+                " select ts, updated, value, type, name from sample limit 1", new SensorSampleRowMapper());
         return sample;
+    }    
+
+    public List<SensorSample> getRecent() {
+        long currentTime = System.currentTimeMillis();
+        long recent = currentTime - (1000 * 60 * 10);
+        Date date = new Date(recent);
+        return jdbcTemplate.query("select ts, updated, value, type, name from sample where ts > ?", new SensorSampleRowMapper(), date);
     }
 }
