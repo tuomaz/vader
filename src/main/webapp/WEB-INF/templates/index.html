@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html xmlns:th="http://www.thymeleaf.org" lang="sv">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
     <body>
         Hej
-        <div id="links">
+        <div id="list">
             <ul>
-                <li th:each="sample : ${samples}">${sample.value}</li>
+                <li th:each="sample : ${samples}" th:text="${#dates.format(sample.timestamp, 'yyyy-MM-dd hh.mm') + ' ' + sample.name + ' ' + sample.roundedValue + '°'}"></li>
             </ul>
         </div>
     </body>

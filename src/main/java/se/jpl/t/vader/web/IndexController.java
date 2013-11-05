@@ -2,6 +2,8 @@ package se.jpl.t.vader.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +22,7 @@ public class IndexController {
     SensorSampleService sss;
     
     @RequestMapping("/")
-    public String first(Model model) {
+    public String first(Model model, HttpServletRequest request) {
         List<SensorSample> samples = sss.getRecent();
         model.addAttribute("samples", samples);
         return "index";

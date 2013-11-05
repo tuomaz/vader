@@ -1,5 +1,9 @@
 package se.jpl.t.vader.config;
 
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +12,23 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.format.Formatter;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.support.FormattingConversionServiceFactoryBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -109,4 +120,21 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
+    
+    /*
+    public FormattingConversionServiceFactoryBean conversionService() {
+    	FormattingConversionServiceFactoryBean formattingConversionServiceFactoryBean = new FormattingConversionServiceFactoryBean();
+    	Set<Formatter> formatters = new HashSet<>();
+    	formatters.add(new DateFormatter());
+    	formattingConversionServiceFactoryBean.setFormatters(formatters);
+    	return formattingConversionServiceFactoryBean;
+    }
+    */
+    
+    @Bean  
+    public ResourceBundleMessageSource messageSource() {  
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();  
+        source.setUseCodeAsDefaultMessage(true);  
+        return source;  
+    }    
 }

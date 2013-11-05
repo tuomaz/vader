@@ -15,7 +15,7 @@
 
     <!-- Spring -->
     <spring-framework.version>3.2.4.RELEASE</spring-framework.version>
-   <thymeleaf-spring3.version>2.0.18</thymeleaf-spring3.version>
+   <thymeleaf-spring3.version>2.1.0.RELEASE</thymeleaf-spring3.version>
 
     <!-- Logging -->
     <logback.version>1.0.13</logback.version>

@@ -17,6 +17,11 @@ public class SensorSample {
     public float getValue() {
         return value;
     }
+    
+    public float getRoundedValue() {
+    	return (float) Math.round(value * 10) / 10;
+    }
+    
     public void setValue(float value) {
         this.value = value;
     }
