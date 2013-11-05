@@ -27,7 +27,7 @@ public class SensorSampleService {
 
     public List<SensorSample> getRecent() {
         long currentTime = System.currentTimeMillis();
-        long recent = currentTime - (1000 * 60 * 10000);
+        long recent = currentTime - (1000 * 60 * 7);
         Date date = new Date(recent);
         return jdbcTemplate.query("select ts, updated, value, type, name from sample where ts > ?", new SensorSampleRowMapper(), date);
     }
