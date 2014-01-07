@@ -29,6 +29,6 @@ public class SensorSampleService {
         long currentTime = System.currentTimeMillis();
         long recent = currentTime - (1000 * 60 * 7);
         Date date = new Date(recent);
-        return jdbcTemplate.query("select ts, updated, value, type, name from sample where ts > ?", new SensorSampleRowMapper(), date);
+        return jdbcTemplate.query("select ts, updated, value, type, name from sample where ts > ? and id in (select * from (select max(id) from sample where ts > ? group by name) as ids)", new SensorSampleRowMapper(), date, date);
     }
 }
