@@ -3,6 +3,7 @@ package se.jpl.t.vader.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,19 +21,32 @@ public class RestController {
     @Autowired
     SensorSampleService sss;
 
+    @Value("#{'${sensors}'.split(',')}")
+    List<String> sensors;
+
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void addPet(@RequestBody List<SensorSample> samples) {
+    public void addPet(@RequestBody final List<SensorSample> samples) {
         if (samples != null) {
             for (SensorSample sample : samples) {
                 sss.save(sample);
             }
         }
     }
-    
+
+    /*
+     * @ResponseBody
+     *
+     * @RequestMapping(value = "/sample/getOne", produces = "application/json") public SensorSample getOne() { return sss.getOne(); }
+     *
+     * @ResponseBody
+     *
+     * @RequestMapping(value = "/sample/getRecent", produces = "application/json") public List<SensorSample> getRecent() { return sss.getRecent(); }
+     */
+
     @ResponseBody
-    @RequestMapping(value ="/getOne", produces="application/json")
-    public SensorSample getOne() {
-        return sss.getOne();
+    @RequestMapping(value = "/sample/get", produces = "application/json")
+    public List<SensorSample> getLatestBySelection() {
+        return sss.getLatestByNames(sensors);
     }
 }
