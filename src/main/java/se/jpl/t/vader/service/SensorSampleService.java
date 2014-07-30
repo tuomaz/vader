@@ -18,6 +18,9 @@ public class SensorSampleService {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
+    ProcessSampleDataService processSampleDataService;
+
+    @Autowired
     public void setDataSourceImage(final DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -51,6 +54,6 @@ public class SensorSampleService {
         for (String name : names) {
             samples.add(getLatestByName(name));
         }
-        return samples;
+        return processSampleDataService.processSamples(samples);
     }
 }

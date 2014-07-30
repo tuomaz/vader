@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class SensorSample {
     private String name;
+    private String realName;
     private float value;
     private SensorType type;
     private Date timestamp;
@@ -61,4 +62,13 @@ public class SensorSample {
     public void setOld(final boolean old) {
         this.old = old;
     }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(final String realName) {
+        this.realName = realName;
+    }
+
 }
