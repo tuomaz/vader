@@ -1,4 +1,4 @@
-var vaderApp = angular.module('vaderApp', [ 'ngRoute', 'vaderControllers' ]);
+var vaderApp = angular.module('vaderApp', [ 'ngRoute', 'angularCharts', 'vaderControllers' ]);
 
 vaderApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
