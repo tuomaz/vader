@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import se.jpl.t.vader.domain.GraphData;
 import se.jpl.t.vader.domain.SensorSample;
 import se.jpl.t.vader.service.SensorSampleService;
 
@@ -49,4 +51,13 @@ public class RestController {
     public List<SensorSample> getLatestBySelection() {
         return sss.getLatestByNames(sensors);
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/sample/get/graph/{name}", produces = "application/json")
+    public GraphData[] getGraphData(@PathVariable String name) {
+        GraphData[] gd = new GraphData[1];
+        gd[0] = sss.getGraphData(name);
+        return gd;
+    }
+
 }
