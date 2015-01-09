@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import se.jpl.t.vader.domain.GraphData;
+import se.jpl.t.vader.domain.GraphPoint;
 import se.jpl.t.vader.domain.SensorSample;
 import se.jpl.t.vader.domain.SensorSampleRowMapper;
 
@@ -49,11 +51,33 @@ public class SensorSampleService {
         return sample;
     }
 
+    public List<SensorSample> getLatest100ByName(final String name) {
+        List<SensorSample> samples = jdbcTemplate.query(
+                "select ts, updated, value, type, name from sample where name = ? order by id desc limit 100", new SensorSampleRowMapper(), name);
+        return samples;
+    }
+
     public List<SensorSample> getLatestByNames(final List<String> names) {
         List<SensorSample> samples = new ArrayList<SensorSample>();
         for (String name : names) {
             samples.add(getLatestByName(name));
         }
         return processSampleDataService.processSamples(samples);
+    }
+    
+    public GraphData getGraphData(String sensor) {
+        List<SensorSample> samples = getLatest100ByName(sensor);
+        GraphData gd = convertSamplesToGraphData(samples);
+        gd.setKey(sensor);
+        return gd;
+    }
+    
+    private GraphData convertSamplesToGraphData(List<SensorSample> samples) {
+        GraphData graphData = new GraphData();
+        for (SensorSample sample: samples) {
+            GraphPoint gp = new GraphPoint(sample.getValue(), sample.getTimestamp());
+            graphData.addPoint(gp);
+        }
+        return graphData;
     }
 }
