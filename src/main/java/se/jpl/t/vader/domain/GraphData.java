@@ -6,12 +6,18 @@ public class GraphData {
     int size = 0;
     int position = 0;
 
+    public GraphData(int size) {
+        values = new Object[size][2];
+    }
+
     public String getKey() {
         return key;
     }
+
     public void setKey(String series) {
         this.key = series;
     }
+
     public Object[][] getValues() {
         return values;
     }

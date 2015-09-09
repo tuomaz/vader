@@ -50,7 +50,7 @@ vaderControllers.controller('GraphController', ['$scope', '$http', '$routeParams
         
         $scope.xAxisTickFormatFunction = function(){
             return function(d){
-                return d3.time.format('%H:%M')(moment.unix(d).toDate());
+                return d3.time.format('%H:%M:%S')(new Date(d));
             }
         };
     }]);

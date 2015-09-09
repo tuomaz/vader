@@ -57,6 +57,12 @@ public class SensorSampleService {
         return samples;
     }
 
+    public List<SensorSample> getLatest24hByName(final String name) {
+        List<SensorSample> samples = jdbcTemplate.query(
+                "select ts, updated, value, type, name from sample where name = ? and ts > (now() - interval 1 day) order by ts asc", new SensorSampleRowMapper(), name);
+        return samples;
+    }
+
     public List<SensorSample> getLatestByNames(final List<String> names) {
         List<SensorSample> samples = new ArrayList<SensorSample>();
         for (String name : names) {
@@ -66,14 +72,14 @@ public class SensorSampleService {
     }
     
     public GraphData getGraphData(String sensor) {
-        List<SensorSample> samples = getLatest100ByName(sensor);
+        List<SensorSample> samples = getLatest24hByName(sensor);
         GraphData gd = convertSamplesToGraphData(samples);
         gd.setKey(sensor);
         return gd;
     }
     
     private GraphData convertSamplesToGraphData(List<SensorSample> samples) {
-        GraphData graphData = new GraphData();
+        GraphData graphData = new GraphData(samples.size());
         for (SensorSample sample: samples) {
             GraphPoint gp = new GraphPoint(sample.getValue(), sample.getTimestamp());
             graphData.addPoint(gp);
