@@ -53,10 +53,10 @@ public class RestController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/sample/get/graph/{name}", produces = "application/json")
-    public GraphData[] getGraphData(@PathVariable String name) {
+    @RequestMapping(value = "/sample/get/graph/{name}/{hours}", produces = "application/json")
+    public GraphData[] getGraphData(@PathVariable String name, @PathVariable int hours) {
         GraphData[] gd = new GraphData[1];
-        gd[0] = sss.getGraphData(name);
+        gd[0] = sss.getGraphData(name, hours);
         return gd;
     }
 

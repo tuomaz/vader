@@ -5,6 +5,7 @@ public class GraphData {
     Object[][] values;
     int size = 0;
     int position = 0;
+    private String realName;
 
     public GraphData(int size) {
         values = new Object[size][2];
@@ -30,5 +31,13 @@ public class GraphData {
         }
         values[position] = gp.getPoint();
         position++;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

@@ -63,6 +63,12 @@ public class SensorSampleService {
         return samples;
     }
 
+    public List<SensorSample> getByNameAndHours(final String name, final int hours) {
+        List<SensorSample> samples = jdbcTemplate.query(
+                "select ts, updated, value, type, name from sample where name = ? and ts > (now() - interval ? hour) order by ts asc", new SensorSampleRowMapper(), name, hours);
+        return samples;
+    }
+
     public List<SensorSample> getLatestByNames(final List<String> names) {
         List<SensorSample> samples = new ArrayList<SensorSample>();
         for (String name : names) {
@@ -71,17 +77,19 @@ public class SensorSampleService {
         return processSampleDataService.processSamples(samples);
     }
     
-    public GraphData getGraphData(String sensor) {
-        List<SensorSample> samples = getLatest24hByName(sensor);
+    public GraphData getGraphData(String sensor, int hours) {
+        List<SensorSample> samples = getByNameAndHours(sensor, hours);
         GraphData gd = convertSamplesToGraphData(samples);
         gd.setKey(sensor);
         return gd;
     }
     
     private GraphData convertSamplesToGraphData(List<SensorSample> samples) {
+        List<SensorSample> processedSamples = processSampleDataService.processSamples(samples);
         GraphData graphData = new GraphData(samples.size());
+        graphData.setRealName(processedSamples.get(0).getRealName());
         for (SensorSample sample: samples) {
-            GraphPoint gp = new GraphPoint(sample.getValue(), sample.getTimestamp());
+            GraphPoint gp = new GraphPoint((float) Math.round(sample.getValue() * 10) / 10, sample.getTimestamp());
             graphData.addPoint(gp);
         }
         return graphData;

@@ -1,4 +1,4 @@
-    <h1>Graf över XX</h1>
+<h1>Graf över {{sensorName}}</h1>
 
 <div ng-controller="GraphController">
     <nvd3-line-chart
@@ -11,5 +11,7 @@
         height="500"
         xAxisTickFormat="xAxisTickFormatFunction()">
     </nvd3-line-chart>
-
+    <button ng-click="showMonth()" >
+        Månad
+    </button>
 </div>
