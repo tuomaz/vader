@@ -3,8 +3,8 @@
         <tr ng-repeat="sample in samples">
             <td><a href="#/graph/{{sample.name}}">{{sample.realName}}</a></td>
             <td>
-            	<div ng-if="sample.old == false && sample.type = 'TEMPERATURE'">{{sample.roundedValue}}°</div>
-            	<div ng-if="sample.old == false && sample.type = 'BAROMETRIC'">{{sample.roundedValue}} hPa</div>
+            	<div ng-if="sample.old == false && sample.type == 'TEMPERATURE'">{{sample.roundedValue}}°</div>
+            	<div ng-if="sample.old == false && sample.type == 'BAROMETRIC'">{{sample.roundedValue}} hPa</div>
             	<div ng-if="sample.old == true">-</div>
             </td>
         </tr>
