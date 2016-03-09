@@ -47,13 +47,13 @@ public class SensorSampleService {
 
     public SensorSample getLatestByName(final String name) {
         SensorSample sample = jdbcTemplate.queryForObject(
-                " select ts, updated, value, type, name from sample where name = ? order by id desc limit 1", new SensorSampleRowMapper(), name);
+                " select ts, updated, value, type, name from sample where name = ? order by ts desc limit 1", new SensorSampleRowMapper(), name);
         return sample;
     }
 
     public List<SensorSample> getLatest100ByName(final String name) {
         List<SensorSample> samples = jdbcTemplate.query(
-                "select ts, updated, value, type, name from sample where name = ? order by id desc limit 100", new SensorSampleRowMapper(), name);
+                "select ts, updated, value, type, name from sample where name = ? order by ts desc limit 100", new SensorSampleRowMapper(), name);
         return samples;
     }
 
